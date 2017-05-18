@@ -7,7 +7,7 @@ class NM:
     OPQ_AP_NAME = "OPQ"
     NM_DEVICE_STATE_DISCONNECTED = 30
     NM_DEVICE_STATE_ACTIVATED = 100
-
+    NM_CONNECTIVITY_FULL = 4
     def __init__(self):
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
@@ -33,6 +33,8 @@ class NM:
                 return True
         return False
 
+    def is_connected_to_internet(self):
+        return nm.NetworkManager.CheckConnectivity() == self.NM_CONNECTIVITY_FULL
 
     def add_connection_wpa(self, SSID, password):
         connections = nm.Settings.ListConnections()
@@ -126,7 +128,6 @@ class NM:
                 out.append([ap.Ssid, ap.Flags | ap.WpaFlags , ap.Strength])
         return out
 
-
 if __name__ == '__main__':
     import time
     netman = NM()
@@ -166,3 +167,5 @@ if __name__ == '__main__':
     print()
     print("Did we connect?")
     print(netman.is_wifi_connected())
+    print("Are we connected to the internet?")
+    netman.is_connected_to_internet()
