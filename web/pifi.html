@@ -9,41 +9,57 @@
     <link rel="stylesheet" href="css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="pifi.css">
+    <link rel="stylesheet" href="css/pifi.css">
 </head>
+<nav class="navbar navbar-inverse bg-inverse sticky-top">
+    <a class="navbar-brand" href="#">PiFi Wireless Agent - OPQ</a>
+</nav>
 <body>
-
-<div class="container">
+<div class="container" id="content">
     <div class="row">
         <div class="col-sm-12">
-
-
             <div class="card">
                 <div class="card-header">
                     Available Wireless Networks
                 </div>
                 <div class="card-block">
                     <ul class="list-group">
+
                         <button type="button" data-target="#collapseExample1" class="list-group-item list-group-item-action" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1">
-                            Test 1
+                            Test WPA Network
                             <span class="float-right text-right">
                                 <span class="icon-wifi3"></span>
                             </span>
                         </button>
                         <div class="collapse" id="collapseExample1">
                             <div class="card card-block">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                <p><b>SSID:</b> Test WPA Network</p>
+                                <p><b>Security:</b> WPA</p>
+                                <p><b>Signal Strength:</b> 78%</p>
+                                <form>
+                                    <div class="form-group row">
+                                        <input type="password" class="form-control col-sm-10" id="exampleInputPassword1" placeholder="Network Password">
+                                        <button type="submit" class="btn btn-primary col-sm-2">Connect to Network</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
+
                         <button type="button" data-target="#collapseExample2" class="list-group-item list-group-item-action" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2">
-                            Test 2
-                            <span class="icon-wifi2"></span>
+                            Test Open Network
+                            <span class="float-right text-right">
+                                <span class="icon-wifi2"></span>
+                            </span>
                         </button>
                         <div class="collapse" id="collapseExample2">
                             <div class="card card-block">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                <p><b>SSID:</b> Test Open Network</p>
+                                <p><b>Security:</b> Open</p>
+                                <p><b>Signal Strength:</b> 95%</p>
+                                <button type="button" class="btn btn-primary btn-block">Connect to Network</button>
                             </div>
                         </div>
+
                     </ul>
 
                 </div>
