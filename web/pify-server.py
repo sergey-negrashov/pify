@@ -5,7 +5,10 @@ import bottle
 def index():
     with open("views/pify.tpl", "r") as f:
         content = f.read()
-        return bottle.template(content, networks=[["Test", 0, 0], ["Test1", 1, 1]])
+        return bottle.template(content, networks=[["Test0", 0, 24],
+                                                  ["Test1", 1, 49],
+                                                  ["Test2", 1, 67],
+                                                  ["Test3", 1, 88]])
 
 # Static file routes
 @bottle.route("/css/<file>")
