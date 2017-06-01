@@ -12,13 +12,6 @@ def index():
                                                   ["Test3", 1, 88]])
 
 
-@bottle.route("/test")
-def test():
-    with open("./views/pify.html", "r") as f:
-        content = f.read()
-        return bottle.template(content)
-
-
 @bottle.route("/refresh")
 def refresh():
     with open("./views/refresh.tpl", "r") as f:
