@@ -3,10 +3,10 @@
 }
 
 .icon-wifi3 {
-    float: right;
     background: url("../img/wifi3.png") no-repeat center center;
     width: 40px;
     height: 32px;
+    margin-left: auto;
     display: inline-block;
 }
 
@@ -14,6 +14,7 @@
     background: url("../img/wifi2.png") no-repeat center center;
     width: 40px;
     height: 32px;
+    margin-left: auto;
     display: inline-block;
 }
 
@@ -21,6 +22,7 @@
     background: url("../img/wifi1.png") no-repeat center center;
     width: 40px;
     height: 32px;
+    margin-left: auto;
     display: inline-block;
 }
 
@@ -28,5 +30,14 @@
     background: url("../img/wifi0.png") no-repeat center center;
     width: 40px;
     height: 32px;
+    margin-left: auto;
+    display: inline-block;
+}
+
+.icon-plus {
+    background: url("../img/plus.png") no-repeat center center;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
     display: inline-block;
 }
