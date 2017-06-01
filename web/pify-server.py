@@ -36,7 +36,7 @@ def img(file):
 
 
 def _run():
-    bottle.run(host="localhost", port=8000)
+    bottle.run(host="0.0.0.0", port=80)
 
 
 if __name__ == "__main__":
