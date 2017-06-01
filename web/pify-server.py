@@ -19,6 +19,13 @@ def test():
         return bottle.template(content)
 
 
+@bottle.route("/refresh")
+def refresh():
+    with open("./views/refresh.tpl", "r") as f:
+        content = f.read()
+        return bottle.template(content)
+
+
 # Static file routes
 @bottle.route("/css/<file>")
 def css(file):

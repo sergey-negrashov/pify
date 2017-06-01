@@ -75,11 +75,13 @@
 <script src="js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('.collapse').on('show.bs.collapse', function (e) {
-            $('.collapse').collapse("hide")
-        })
-    })
+    var countdown = 30;
+    function cd() {
+        document.getElementById("countdown").innerText = "This page will refresh in " + countdown + " seconds..."
+    }
+    while(countdown-- > 0) {
+        window.setTimeout(cd, 1000);
+    }
 </script>
 
 </body>

@@ -63,7 +63,7 @@
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-danger btn-block">Refresh Wireless Network List</button>
+                    <a href="/refresh" class="btn btn-danger btn-block">Refresh Wireless Network List</a>
                 </div>
             </div>
         </div>
