@@ -23,14 +23,11 @@
                 </div>
                 <div class="card-block">
                     <ul class="list-group">
-
-                        <button type="button" data-target="#collapseExample1" class="list-group-item list-group-item-action" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1">
+                        <a data-target="#collapseExample1" href="#collapseExample1" class="list-group-item list-group-item-action" data-toggle="collapse">
                             Test WPA Network
-                            <span class="float-right text-right">
                                 <span class="icon-wifi3"></span>
-                            </span>
-                        </button>
-                        <div class="collapse" id="collapseExample1">
+                        </a>
+                        <div class="collapse" id="collapseExample1" role="tabpanel">
                             <div class="card card-block">
                                 <p><b>SSID:</b> Test WPA Network</p>
                                 <p><b>Security:</b> WPA</p>
@@ -44,13 +41,13 @@
                             </div>
                         </div>
 
-                        <button type="button" data-target="#collapseExample2" class="list-group-item list-group-item-action" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2">
+                        <a data-target="#collapseExample2" href="#collapseExample2" data-parent="#network-list" class="list-group-item list-group-item-action" data-toggle="collapse">
                             Test Open Network
-                            <span class="float-right text-right">
-                                <span class="icon-wifi2"></span>
-                            </span>
-                        </button>
-                        <div class="collapse" id="collapseExample2">
+
+                                <span class="icon-wifi2 float-right text-right"></span>
+
+                        </a>
+                        <div class="collapse" id="collapseExample2" role="tabpanel">
                             <div class="card card-block">
                                 <p><b>SSID:</b> Test Open Network</p>
                                 <p><b>Security:</b> Open</p>
@@ -76,5 +73,14 @@
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.collapse').on('show.bs.collapse', function (e) {
+            $('.collapse').collapse("hide")
+        })
+    })
+</script>
+
 </body>
 </html>
