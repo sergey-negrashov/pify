@@ -26,6 +26,40 @@
                     % for network in networks:
                         %include("network.tpl", ssid=network[0], security=network[1], strength=network[2])
                     % end
+
+                    <!-- Connect to hidden open network -->
+                    <button type="button" data-target="#hidden-open" class="list-group-item list-group-item-action" data-toggle="collapse" aria-expanded="false" aria-controls="hidden-open">
+                        Connect to Hidden Open Network
+                        <span class="icon-plus"></span>
+                    </button>
+                    <div class="collapse" id="hidden-open">
+                        <div class="card card-block">
+                            <form>
+                                <div class="form-group row">
+                                    <input type="text" class="form-control col-sm-10" id="open-network-ssid" placeholder="Open Network SSID">
+                                    <button type="submit" class="btn btn-primary col-sm-2">Connect to Network</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Connect to hidden WPA network -->
+                    <button type="button" data-target="#hidden-wpa" class="list-group-item list-group-item-action" data-toggle="collapse" aria-expanded="false" aria-controls="hidden-wpa">
+                        Connect to Hidden WPA Network
+                        <span class="icon-plus"></span>
+                    </button>
+                    <div class="collapse" id="hidden-wpa">
+                        <div class="card card-block">
+                            <form>
+                                <div class="form-group row">
+                                    <input type="text" class="form-control col-sm-5" id="wpa-network-ssid" placeholder="WPA Network SSID">
+                                    <input type="password" class="form-control col-sm-5" id="wpa-network-pass" placeholder="WPA Network Password">
+                                    <button type="submit" class="btn btn-primary col-sm-2">Connect to Network</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     </ul>
                 </div>
                 <div class="card-footer">

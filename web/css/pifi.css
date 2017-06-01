@@ -3,7 +3,6 @@
 }
 
 .icon-wifi3 {
-
     background: url("../img/wifi3.png") no-repeat center center;
     width: 40px;
     height: 32px;
@@ -31,6 +30,14 @@
     background: url("../img/wifi0.png") no-repeat center center;
     width: 40px;
     height: 32px;
+    margin-left: auto;
+    display: inline-block;
+}
+
+.icon-plus {
+    background: url("../img/plus.png") no-repeat center center;
+    width: 40px;
+    height: 40px;
     margin-left: auto;
     display: inline-block;
 }
