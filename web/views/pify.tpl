@@ -34,9 +34,10 @@
                     </button>
                     <div class="collapse" id="hidden-open">
                         <div class="card card-block">
-                            <form>
+                            <form action="/connect/open" method="POST">
+                                <input id="security_type_open" name="security_type" type="hidden" value="open">
                                 <div class="form-group row">
-                                    <input type="text" class="form-control col-sm-10" id="open-network-ssid" placeholder="Open Network SSID">
+                                    <input type="text" class="form-control col-sm-10" id="open-network-ssid" name="ssid" placeholder="Open Network SSID">
                                     <button type="submit" class="btn btn-primary col-sm-2">Connect to Network</button>
                                 </div>
                             </form>
@@ -50,16 +51,16 @@
                     </button>
                     <div class="collapse" id="hidden-wpa">
                         <div class="card card-block">
-                            <form>
+                            <form action="/connect/wpa" method="POST">
+                                <input id="security_type_wpa" name="security_type" type="hidden" value="wpa">
                                 <div class="form-group row">
-                                    <input type="text" class="form-control col-sm-5" id="wpa-network-ssid" placeholder="WPA Network SSID">
-                                    <input type="password" class="form-control col-sm-5" id="wpa-network-pass" placeholder="WPA Network Password">
+                                    <input type="text" class="form-control col-sm-5" id="wpa-network-ssid" name="ssid" placeholder="WPA Network SSID">
+                                    <input type="password" class="form-control col-sm-5" id="wpa-network-pass" name="ssid_pass" placeholder="WPA Network Password">
                                     <button type="submit" class="btn btn-primary col-sm-2">Connect to Network</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-
                     </ul>
                 </div>
                 <div class="card-footer">

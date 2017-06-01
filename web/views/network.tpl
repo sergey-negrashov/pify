@@ -15,12 +15,14 @@
         <p><b>SSID:</b> {{ssid}}</p>
         <p><b>Security:</b> {{"Open" if security == 0 else "WPA"}}</p>
         <p><b>Signal Strength:</b> {{strength}}%</p>
-        <form>
+        <form action="{{"/connect/open" if security == 0 else "/connect/wpa"}}" method="post">
+            <input id="security_type_{{ssid}}" name="security_type" type="hidden" value="{{"open" if security == 0 else "wpa"}}">
+            <input id="ssid_{{ssid}}" name="ssid" type="hidden" value="{{ssid}}">
             <div class="form-group row">
             % if security == 0:
                 <button type="submit" class="btn btn-primary btn-block">Connect to Network</button>
             % else:
-                <input type="password" class="form-control col-sm-10" id="{{ssid.lower().replace(" ", "_")}}pass" placeholder="Network Password">
+                <input type="password" class="form-control col-sm-10" id="ssid_pass_{{ssid}}" name="ssid_pass" placeholder="Network Password">
                 <button type="submit" class="btn btn-primary col-sm-2">Connect to Network</button>
             % end
             </div>

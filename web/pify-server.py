@@ -26,6 +26,16 @@ def refresh():
         return bottle.template(content)
 
 
+@bottle.post("/connect/open")
+def connect_open():
+    return "<p>" + str(bottle.request.forms) + "</p>"
+
+
+@bottle.post("/connect/wpa")
+def connect_wpa():
+    return "<p>" + str(bottle.request.forms) + "</p>"
+
+
 # Static file routes
 @bottle.route("/css/<file>")
 def css(file):
