@@ -1,20 +1,19 @@
 import bottle
-
+import nmoperations
+import os
 
 # Application routes
 @bottle.route("/")
 def index():
-    with open("views/pify.tpl", "r") as f:
+    nm = nmoperations.NM()
+    with open("web/views/pify.tpl", "r") as f:
         content = f.read()
-        return bottle.template(content, networks=[["Test0", 0, 24],
-                                                  ["Test1", 1, 49],
-                                                  ["Test2", 1, 67],
-                                                  ["Test3", 1, 88]])
+        return bottle.template(content, networks=nm.get_ssids())
 
 
 @bottle.route("/refresh")
 def refresh():
-    with open("./views/refresh.tpl", "r") as f:
+    with open("web/views/refresh.tpl", "r") as f:
         content = f.read()
         return bottle.template(content)
 
@@ -32,17 +31,17 @@ def connect_wpa():
 # Static file routes
 @bottle.route("/css/<file>")
 def css(file):
-    return bottle.static_file(file, "./css")
+    return bottle.static_file(file, "web/css")
 
 
 @bottle.route("/js/<file>")
 def js(file):
-    return bottle.static_file(file, "./js")
+    return bottle.static_file(file, "web/js")
 
 
 @bottle.route("/img/<file>")
 def img(file):
-    return bottle.static_file(file, "./img")
+    return bottle.static_file(file, "web/img")
 
 
 def _run():
