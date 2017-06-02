@@ -20,11 +20,37 @@ def refresh():
 
 @bottle.post("/connect/open")
 def connect_open():
+    nm = nmoperations.NM()
+    form = bottle.request.forms
+    if "security_type" in form and "ssid" in form:
+        ssid = form["ssid"]
+        if form["security_type"] == "open":
+            if nm.is_in_AP_mode():
+                nm.disable_AP_mode()
+            nm.add_connection_open(ssid)
+            nm.activate_connection(ssid)
+    else:
+        return "Invalid connection type"
+
     return "<p>" + str(bottle.request.forms) + "</p>"
 
 
 @bottle.post("/connect/wpa")
 def connect_wpa():
+    nm = nmoperations.NM()
+    form = bottle.request.forms
+    if "security_type" in form and "ssid" in form and "ssid_pass" in form:
+        ssid = form["ssid"]
+        ssid_pass = form["ssid_pass"]
+        if form["security_type"] == "wpa":
+            if nm.is_in_AP_mode():
+                nm.disable_AP_mode()
+            nm.add_connection_wpa(ssid, ssid_pass)
+            nm.activate_connection(ssid)
+    else:
+        return "Invalid connection type"
+
+
     return "<p>" + str(bottle.request.forms) + "</p>"
 
 
