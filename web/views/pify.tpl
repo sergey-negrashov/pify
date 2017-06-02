@@ -24,7 +24,7 @@
                 <div class="card-block">
                     <ul class="list-group">
                     % for network in networks:
-                        %include("network.tpl", ssid=network[0], security=network[1], strength=network[2])
+                        %include("web/views/network.tpl", ssid=network[0], security=network[1], strength=network[2])
                     % end
 
                     <!-- Connect to hidden open network -->
