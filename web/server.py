@@ -1,6 +1,5 @@
 import bottle
 import nmoperations
-import os
 
 # Application routes
 @bottle.route("/")
