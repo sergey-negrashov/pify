@@ -1,5 +1,7 @@
 import bottle
 import nmoperations
+import pify
+
 
 # Application routes
 @bottle.route("/")
@@ -14,6 +16,7 @@ def index():
 def refresh():
     with open("web/views/refresh.tpl", "r") as f:
         content = f.read()
+        pify.wait_then_run(5, pify.refresh, [nmoperations.NM()])
         return bottle.template(content)
 
 
@@ -24,15 +27,10 @@ def connect_open():
     if "security_type" in form and "ssid" in form:
         ssid = form["ssid"]
         if form["security_type"] == "open":
-            if nm.is_in_AP_mode():
-                nm.disable_AP_mode()
-            nm.add_connection_open(ssid)
-            nm.activate_connection(ssid)
+            pify.wait_then_run(5, pify.connect_open, [nm, ssid])
+            return "Please check TODO FILL ME IN to make sure your device is working."
     else:
         return "Invalid connection type"
-
-    return "<p>" + str(bottle.request.forms) + "</p>"
-
 
 @bottle.post("/connect/wpa")
 def connect_wpa():
@@ -42,13 +40,10 @@ def connect_wpa():
         ssid = form["ssid"]
         ssid_pass = form["ssid_pass"]
         if form["security_type"] == "wpa":
-            if nm.is_in_AP_mode():
-                nm.disable_AP_mode()
-            nm.add_connection_wpa(ssid, ssid_pass)
-            nm.activate_connection(ssid)
+            pify.wait_then_run(5, pify.connect_wpa, [nm, ssid, ssid_pass])
+            return "Please check TODO FILL ME IN to make sure your device is working."
     else:
         return "Invalid connection type"
-
 
     return "<p>" + str(bottle.request.forms) + "</p>"
 
@@ -69,9 +64,9 @@ def img(file):
     return bottle.static_file(file, "web/img")
 
 
-def _run():
+def run():
     bottle.run(host="0.0.0.0", port=80)
 
 
 if __name__ == "__main__":
-    _run()
+    run()
