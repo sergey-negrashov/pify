@@ -1,23 +1,28 @@
+import logging
+
 import bottle
 import nmoperations
 import pify
 
 
-# Application routes
+def load_tpl(path: str) -> str:
+    try:
+        with open(path) as f:
+            return f.read()
+    except FileNotFoundError:
+        logging.error("load_tpl: template not found: {}".format(path))
+
+
 @bottle.route("/")
 def index():
     nm = nmoperations.NM()
-    with open("web/views/pify.tpl", "r") as f:
-        content = f.read()
-        return bottle.template(content, networks=nm.get_ssids())
+    return bottle.template(load_tpl("web/views/pify.tpl"), networks=nm.get_ssids())
 
 
 @bottle.route("/refresh")
 def refresh():
-    with open("web/views/refresh.tpl", "r") as f:
-        content = f.read()
-        pify.wait_then_run(5, pify.refresh, [nmoperations.NM()])
-        return bottle.template(content)
+    pify.wait_then_run(5, pify.refresh, [nmoperations.NM()])
+    return bottle.template(load_tpl("web/views/refresh.tpl"))
 
 
 @bottle.post("/connect/open")
@@ -31,6 +36,7 @@ def connect_open():
             return "Please check TODO FILL ME IN to make sure your device is working."
     else:
         return "Invalid connection type"
+
 
 @bottle.post("/connect/wpa")
 def connect_wpa():
@@ -50,17 +56,17 @@ def connect_wpa():
 
 # Static file routes
 @bottle.route("/css/<file>")
-def css(file):
+def css(file: str):
     return bottle.static_file(file, "web/css")
 
 
 @bottle.route("/js/<file>")
-def js(file):
+def js(file: str):
     return bottle.static_file(file, "web/js")
 
 
 @bottle.route("/img/<file>")
-def img(file):
+def img(file: str):
     return bottle.static_file(file, "web/img")
 
 
