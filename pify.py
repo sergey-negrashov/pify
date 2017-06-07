@@ -1,6 +1,7 @@
 import logging
 import sched
 import time
+import threading
 import typing
 
 import nmoperations
@@ -99,12 +100,23 @@ def refresh(nm: nmoperations.NM):
     enable_ap(nm)
     logging.info("refresh done")
 
+class PifyFsmThread(threading.Thread):
+    def __init__(self):
+        super().__init__()
+        self.nm = nmoperations.NM()
+
+    def run(self):
+        start_fsm(self.nm)
+
 
 if __name__ == "__main__":
     logging.info("Starting pify")
 
-    logging.info("Starting bottle server")
-    #web.server.run()
-
     logging.info("Starting pify FSM")
-    start_fsm(nmoperations.NM())
+    fsm_thread = PifyFsmThread()
+    fsm_thread.start()
+
+    logging.info("Starting bottle server")
+    web.server.run()
+
+
