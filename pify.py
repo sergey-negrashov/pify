@@ -6,11 +6,12 @@ import typing
 import nmoperations
 import web.server
 
+logging.basicConfig(level=logging.DEBUG)
 
-def wait_then_run(sec: int, fn: typing.Callable, args: typing.List):
+def wait_then_run(sec: int, fn: typing.Callable, args: typing.List, blocking: bool = False):
     s = sched.scheduler()
     s.enter(sec, 1, fn, tuple(args))
-    s.run(blocking=False)
+    s.run(blocking=blocking)
 
 
 def disable_ap(nm: nmoperations.NM):
@@ -54,13 +55,14 @@ def connect_any(nm: nmoperations.NM):
 def monitor_connection(nm: nmoperations.NM):
     if nm.is_connected_to_internet():
         logging.info("monitor_connection: connected to internet")
-        wait_then_run(60 * 10, monitor_connection, [nm])
+        wait_then_run(60 * 10, monitor_connection, [nm], blocking=True)
     else:
         logging.info("monitor_connection: not connected to internet")
         enable_ap(nm)
 
 
 def monitor_ap(nm: nmoperations.NM):
+    logging.info("monitor_ap")
     disable_ap(nm)
     is_conn_a(nm)
 
@@ -75,6 +77,7 @@ def enable_ap(nm: nmoperations.NM):
 
 
 def connect_open(nm: nmoperations.NM, ssid: str):
+    logging.info("connect_open")
     disable_ap(nm)
     nm.add_connection_open(ssid)
     nm.activate_connection(ssid)
@@ -82,6 +85,7 @@ def connect_open(nm: nmoperations.NM, ssid: str):
 
 
 def connect_wpa(nm: nmoperations.NM, ssid: str, passwd: str):
+    logging.info("connect_wpa")
     disable_ap(nm)
     nm.add_connection_wpa(ssid, passwd)
     nm.activate_connection(ssid)
@@ -89,16 +93,18 @@ def connect_wpa(nm: nmoperations.NM, ssid: str, passwd: str):
 
 
 def refresh(nm: nmoperations.NM):
+    logging.info("refresh")
     disable_ap(nm)
     time.sleep(5)
     enable_ap(nm)
+    logging.info("refresh done")
 
 
 if __name__ == "__main__":
     logging.info("Starting pify")
 
     logging.info("Starting bottle server")
-    web.server.run()
+    #web.server.run()
 
     logging.info("Starting pify FSM")
     start_fsm(nmoperations.NM())
