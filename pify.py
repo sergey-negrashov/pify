@@ -18,10 +18,10 @@ def wait_then_run(sec: int, fn: typing.Callable, args: typing.List, blocking: bo
 
 def disable_ap(nm: nmoperations.NM):
     while nm.is_in_AP_mode():
-        print("Disabling AP mode")
+        logging.info("Disabling AP mode")
         nm.disable_AP_mode()
         time.sleep(1)
-    print("AP mode disabled")
+    logging.info("AP mode disabled")
 
 
 def start_fsm(nm: nmoperations.NM):
@@ -31,47 +31,47 @@ def start_fsm(nm: nmoperations.NM):
 
 def is_conn_a(nm: nmoperations.NM):
     if nm.is_connected_to_internet():
-        print("is_conn_a: connected to internet, monitoring connection")
+        logging.info("is_conn_a: connected to internet, monitoring connection")
         monitor_connection(nm)
     else:
-        print("is_conn_a: not connected to internet, going into AP mode")
+        logging.info("is_conn_a: not connected to internet, going into AP mode")
         connect_any(nm)
 
 
 def is_conn_b(nm: nmoperations.NM):
     if nm.is_connected_to_internet():
-        print("is_conn_b: connected to internet, monitoring connection")
+        logging.info("is_conn_b: connected to internet, monitoring connection")
         monitor_connection(nm)
     else:
-        print("is_conn_b: not connected to internet, going into AP mode")
+        logging.info("is_conn_b: not connected to internet, going into AP mode")
         enable_ap(nm)
 
 
 def connect_any(nm: nmoperations.NM):
     disable_ap(nm)
-    print("Attempting to connect to any open or previously connected networks")
+    logging.info("Attempting to connect to any open or previously connected networks")
     nm.activate_any_connection()
     wait_then_run(10, is_conn_b, [nm])
 
 
 def monitor_connection(nm: nmoperations.NM):
     if nm.is_connected_to_internet():
-        print("monitor_connection: connected to internet")
-        wait_then_run(60 * 10, monitor_connection, [nm], blocking=True)
+        logging.info("monitor_connection: connected to internet")
+        wait_then_run(60, monitor_connection, [nm], blocking=True)
     else:
-        print("monitor_connection: not connected to internet")
+        logging.info("monitor_connection: not connected to internet")
         enable_ap(nm)
 
 
 def monitor_ap(nm: nmoperations.NM):
-    print("monitor_ap")
+    logging.info("monitor_ap")
     disable_ap(nm)
     is_conn_a(nm)
 
 
 def enable_ap(nm: nmoperations.NM):
     while not nm.is_in_AP_mode():
-        print("Attempting to go into AP mode")
+        logging.info("Attempting to go into AP mode")
         nm.create_AP()
         time.sleep(1)
 
@@ -79,7 +79,7 @@ def enable_ap(nm: nmoperations.NM):
 
 
 def connect_open(nm: nmoperations.NM, ssid: str):
-    print("connect_open")
+    logging.info("connect_open")
     disable_ap(nm)
     nm.add_connection_open(ssid)
     nm.activate_connection(ssid)
@@ -87,7 +87,7 @@ def connect_open(nm: nmoperations.NM, ssid: str):
 
 
 def connect_wpa(nm: nmoperations.NM, ssid: str, passwd: str):
-    print("connect_wpa")
+    logging.info("connect_wpa")
     disable_ap(nm)
     nm.add_connection_wpa(ssid, passwd)
     nm.activate_connection(ssid)
@@ -95,11 +95,11 @@ def connect_wpa(nm: nmoperations.NM, ssid: str, passwd: str):
 
 
 def refresh(nm: nmoperations.NM):
-    print("refresh")
+    logging.info("refresh")
     disable_ap(nm)
     time.sleep(5)
     enable_ap(nm)
-    print("refresh done")
+    logging.info("refresh done")
 
 class PifyFsmThread(threading.Thread):
     def __init__(self):
@@ -111,13 +111,13 @@ class PifyFsmThread(threading.Thread):
 
 
 if __name__ == "__main__":
-    print("Starting pify")
+    logging.info("Starting pify")
 
-    print("Starting pify FSM")
+    logging.info("Starting pify FSM")
     fsm_thread = PifyFsmThread()
     fsm_thread.start()
 
-    print("Starting bottle server")
+    logging.info("Starting bottle server")
     web.server.run()
 
 

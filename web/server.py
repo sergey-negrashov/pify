@@ -1,4 +1,5 @@
 import logging
+import threading
 
 import bottle
 import nmoperations
@@ -21,7 +22,9 @@ def index():
 
 @bottle.route("/refresh")
 def refresh():
-    pify.wait_then_run(5, pify.refresh, [nmoperations.NM()])
+    #pify.wait_then_run(5, pify.refresh, [nmoperations.NM()])
+    timer = threading.Timer(5, pify.refresh, (nmoperations.NM(),))
+    timer.start()
     return bottle.template(load_tpl("web/views/refresh.tpl"))
 
 
@@ -32,7 +35,8 @@ def connect_open():
     if "security_type" in form and "ssid" in form:
         ssid = form["ssid"]
         if form["security_type"] == "open":
-            pify.wait_then_run(5, pify.connect_open, [nm, ssid])
+            timer = threading.Timer(5, pify.connect_open, (nm, ssid))
+            timer.start()
             return "Please check TODO FILL ME IN to make sure your device is working."
     else:
         return "Invalid connection type"
@@ -46,7 +50,8 @@ def connect_wpa():
         ssid = form["ssid"]
         ssid_pass = form["ssid_pass"]
         if form["security_type"] == "wpa":
-            pify.wait_then_run(5, pify.connect_wpa, [nm, ssid, ssid_pass])
+            timer = threading.Timer(5, pify.connect_wpa, (nm, ssid, ssid_pass))
+            timer.start()
             return "Please check TODO FILL ME IN to make sure your device is working."
     else:
         return "Invalid connection type"
