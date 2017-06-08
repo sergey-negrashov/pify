@@ -17,7 +17,9 @@ def load_tpl(path: str) -> str:
 @bottle.route("/")
 def index():
     nm = nmoperations.NM()
-    return bottle.template(load_tpl("web/views/pify.tpl"), networks=nm.get_ssids())
+    ssids = nm.get_ssids()
+    print("refresh", ssids)
+    return bottle.template(load_tpl("web/views/pify.tpl"), networks=ssids)
 
 
 @bottle.route("/refresh")

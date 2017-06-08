@@ -39,7 +39,7 @@
         if(countdown > 0) {
             window.setTimeout(cd, one_sec);
         } else {
-            window.location = "/"
+            window.location.href = "/"
         }
     }
     cd();

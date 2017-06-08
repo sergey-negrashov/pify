@@ -34,7 +34,7 @@ def is_conn_a(nm: nmoperations.NM):
         logging.info("is_conn_a: connected to internet, monitoring connection")
         monitor_connection(nm)
     else:
-        logging.info("is_conn_a: not connected to internet, going into AP mode")
+        logging.info("is_conn_a: not connected to internet, attempting to connect to any open network")
         connect_any(nm)
 
 
@@ -51,7 +51,8 @@ def connect_any(nm: nmoperations.NM):
     disable_ap(nm)
     logging.info("Attempting to connect to any open or previously connected networks")
     nm.activate_any_connection()
-    wait_then_run(10, is_conn_b, [nm])
+    logging.info("After connect any")
+    wait_then_run(10, is_conn_b, [nm], True)
 
 
 def monitor_connection(nm: nmoperations.NM):
