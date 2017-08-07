@@ -86,7 +86,7 @@ class NM:
                            'type': '802-11-wireless',
                            'uuid': str(uuid.uuid3(uuid.NAMESPACE_DNS, self.OPQ_AP_NAME)),
                            'autoconnect': False},
-            'ipv4': {'method': 'auto'},
+            'ipv4': {'method': 'shared'},
             'ipv6': {'method': 'auto'}
         }
         nm.Settings.AddConnection(new_connection)
@@ -120,13 +120,23 @@ class NM:
 
     def get_ssids(self):
         out = []
+        ssids = set()
         self.disable_AP_mode()
         for dev in nm.NetworkManager.GetDevices():
             if dev.DeviceType != nm.NM_DEVICE_TYPE_WIFI:
                 continue
             for ap in dev.GetAccessPoints():
-                out.append([ap.Ssid, ap.Flags | ap.WpaFlags , ap.Strength])
+                if not ap.Ssid in ssids:
+                    ssids.add(ap.Ssid)
+                    out.append([ap.Ssid, ap.Flags | ap.WpaFlags , ap.Strength])
         return out
+
+    def delete_all_connection(self):
+        connections = nm.Settings.ListConnections()
+        for c in connections:
+            if c.GetSettings()['connection']['interface-name'] == 'wlan0':
+                c.Delete()
+
 
 if __name__ == '__main__':
     import time

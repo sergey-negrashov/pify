@@ -23,7 +23,7 @@
                 </div>
                 <div class="card-block">
                     <ul class="list-group">
-                    % for network in networks:
+                    % for network in sorted(networks, key=lambda lst: lst[2], reverse=True):
                         %include("web/views/network.tpl", ssid=network[0], security=network[1], strength=network[2])
                     % end
 
