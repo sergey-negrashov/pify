@@ -65,6 +65,7 @@
                 </div>
                 <div class="card-footer">
                     <a href="/refresh" class="btn btn-danger btn-block">Refresh Wireless Network List</a>
+                    <a href="/forget" class="btn btn-danger btn-block">Forget Saved Networks</a>
                 </div>
             </div>
         </div>

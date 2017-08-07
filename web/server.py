@@ -29,6 +29,13 @@ def refresh():
     timer.start()
     return bottle.template(load_tpl("web/views/refresh.tpl"))
 
+@bottle.route("/forget")
+def forget_devices():
+    nm = nmoperations.NM()
+    timer = threading.Timer(5, pify.forget_networks, (nm,))
+    timer.start()
+    return bottle.template(load_tpl("web/views/refresh.tpl"))
+
 
 @bottle.post("/connect/open")
 def connect_open():
@@ -39,7 +46,7 @@ def connect_open():
         if form["security_type"] == "open":
             timer = threading.Timer(5, pify.connect_open, (nm, ssid))
             timer.start()
-            return "Please check TODO FILL ME IN to make sure your device is working."
+            return bottle.template(load_tpl("web/views/post_connect.tpl"), ssid=ssid)
     else:
         return "Invalid connection type"
 
@@ -54,7 +61,7 @@ def connect_wpa():
         if form["security_type"] == "wpa":
             timer = threading.Timer(5, pify.connect_wpa, (nm, ssid, ssid_pass))
             timer.start()
-            return "Please check TODO FILL ME IN to make sure your device is working."
+            return bottle.template(load_tpl("web/views/post_connect.tpl"), ssid=ssid)
     else:
         return "Invalid connection type"
 

@@ -102,6 +102,12 @@ def refresh(nm: nmoperations.NM):
     enable_ap(nm)
     logging.info("refresh done")
 
+def forget_networks(nm: nmoperations.NM):
+    logging.info("Forgetting all wireless networks")
+    disable_ap(nm)
+    nm.delete_all_connection()
+    enable_ap(nm)
+
 class PifyFsmThread(threading.Thread):
     def __init__(self):
         super().__init__()
