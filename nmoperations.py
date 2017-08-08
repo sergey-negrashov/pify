@@ -133,9 +133,12 @@ class NM:
 
     def delete_all_connection(self):
         connections = nm.Settings.ListConnections()
-        for c in connections:
-            if c.GetSettings()['connection']['interface-name'] == 'wlan0':
-                c.Delete()
+        connections = dict([(x.GetSettings()["connection"]["id"], x) for x in connections])
+
+        for ssid, conn in connections.items():
+            if ssid != 'eth0':
+                print("Forgetting", ssid)
+                connections[ssid].Delete()
 
 
 if __name__ == '__main__':
