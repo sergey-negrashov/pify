@@ -5,6 +5,7 @@ import bottle
 import nmoperations
 import pify
 
+_nm = None
 
 def load_tpl(path: str) -> str:
     try:
@@ -16,8 +17,8 @@ def load_tpl(path: str) -> str:
 
 @bottle.route("/")
 def index():
-    nm = nmoperations.NM()
-    ssids = nm.get_ssids()
+    #nm = nmoperations.NM()
+    ssids = _nm.get_ssids()
     print("refresh", ssids)
     return bottle.template(load_tpl("web/views/pify.tpl"), networks=ssids)
 
@@ -84,9 +85,12 @@ def img(file: str):
     return bottle.static_file(file, "web/img")
 
 
-def run():
+def run(nm):
+    global _nm
+    _nm = nm
     bottle.run(host="0.0.0.0", port=80)
 
 
 if __name__ == "__main__":
-    run()
+    nm = nmoperations.NM()
+    run(nm)

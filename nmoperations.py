@@ -8,8 +8,10 @@ class NM:
     NM_DEVICE_STATE_DISCONNECTED = 30
     NM_DEVICE_STATE_ACTIVATED = 100
     NM_CONNECTIVITY_FULL = 4
+
     def __init__(self):
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+        self.cached_ssids = []
 
     def is_wifi_connected(self):
         for conn in nm.NetworkManager.ActiveConnections:
@@ -118,17 +120,22 @@ class NM:
         nm.NetworkManager.Enable(False)
         nm.NetworkManager.Enable(True)
 
+    @property
     def get_ssids(self):
-        out = []
-        ssids = set()
-        for dev in nm.NetworkManager.GetDevices():
-            if dev.DeviceType != nm.NM_DEVICE_TYPE_WIFI:
-                continue
-            for ap in dev.GetAccessPoints():
-                if not ap.Ssid in ssids:
-                    ssids.add(ap.Ssid)
-                    out.append([ap.Ssid, ap.Flags | ap.WpaFlags , ap.Strength])
-        return out
+        if self.is_in_AP_mode():
+            pass
+        else:
+            self.cached_ssids.clear()
+            ssids = set()
+            for dev in nm.NetworkManager.GetDevices():
+                if dev.DeviceType != nm.NM_DEVICE_TYPE_WIFI:
+                    continue
+                for ap in dev.GetAccessPoints():
+                    if ap.Ssid not in ssids:
+                        ssids.add(ap.Ssid)
+                        self.cached_ssids.append([ap.Ssid, ap.Flags | ap.WpaFlags, ap.Strength])
+
+        return self.cached_ssids
 
     def delete_all_connection(self):
         connections = nm.Settings.ListConnections()
@@ -152,7 +159,7 @@ if __name__ == '__main__':
     print()
     print("Did we connect?")
     print(netman.is_wifi_connected())
-    networks = netman.get_ssids()
+    networks = netman.get_ssids
     for network in networks:
         print ("Name: "  + network[0])
         print ("Encrypted: " + str(network[1] != 0))
@@ -166,7 +173,7 @@ if __name__ == '__main__':
     netman.disable_AP_mode()
     print("Are we in AP mode?")
     print(netman.is_in_AP_mode())
-    networks = netman.get_ssids()
+    networks = netman.get_ssids
     for network in networks:
         print ("Name: " + network[0])
         print ("Encrypted: " + str(network[1] != 0))
