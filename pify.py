@@ -26,6 +26,7 @@ def disable_ap(nm: nmoperations.NM):
 
 def start_fsm(nm: nmoperations.NM):
     disable_ap(nm)
+    nm.get_ssids()
     is_conn_a(nm)
 
 
@@ -67,6 +68,7 @@ def monitor_connection(nm: nmoperations.NM):
 def monitor_ap(nm: nmoperations.NM):
     logging.info("monitor_ap")
     disable_ap(nm)
+    nm.get_ssids()
     is_conn_a(nm)
 
 
@@ -101,6 +103,7 @@ def refresh(nm: nmoperations.NM):
     time.sleep(5)
     enable_ap(nm)
     logging.info("refresh done")
+
 
 def forget_networks(nm: nmoperations.NM):
     logging.info("Forgetting all wireless networks")

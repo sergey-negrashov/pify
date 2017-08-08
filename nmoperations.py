@@ -121,7 +121,6 @@ class NM:
     def get_ssids(self):
         out = []
         ssids = set()
-        self.disable_AP_mode()
         for dev in nm.NetworkManager.GetDevices():
             if dev.DeviceType != nm.NM_DEVICE_TYPE_WIFI:
                 continue
