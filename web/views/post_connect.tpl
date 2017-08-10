@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="css/pifi.css">
+    <title>{{pify_server_title}}</title>
 </head>
 <body>
 <nav class="navbar navbar-inverse bg-inverse sticky-top">
-    <a class="navbar-brand" href="#">PiFi Wireless Agent - OPQ</a>
+    <a class="navbar-brand" href="#">{{pify_server_title}}</a>
 </nav>
 <div class="container" id="content">
     <div class="row">
@@ -39,7 +40,7 @@
         if(countdown > 0) {
             window.setTimeout(cd, one_sec);
         } else {
-            window.location.href = "http://emilia.ics.hawaii.edu/research"
+            window.location.href = "{{pify_post_connect_url}}"
         }
     }
     cd();

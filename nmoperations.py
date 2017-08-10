@@ -1,23 +1,25 @@
+import conf
 import NetworkManager as nm
 import dbus.mainloop.glib
 import uuid
 
 
 class NM:
-    OPQ_AP_NAME = "OPQ"
     NM_DEVICE_STATE_DISCONNECTED = 30
     NM_DEVICE_STATE_ACTIVATED = 100
     NM_CONNECTIVITY_FULL = 4
 
-    def __init__(self):
+    def __init__(self, pify_config: conf.PifyConfiguration = None):
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
         self.cached_ssids = []
+        self.pify_config = pify_config if pify_config is not None else conf.PifyConfiguration()
+        self.pify_ap_ssid = self.pify_config.pify_ap_ssid()
 
     def is_wifi_connected(self):
         for conn in nm.NetworkManager.ActiveConnections:
             settings = conn.Connection.GetSettings()['connection']
             if settings['type'] == "802-11-wireless":
-                if settings['uuid'] != str(uuid.uuid3(uuid.NAMESPACE_DNS, self.OPQ_AP_NAME)):
+                if settings['uuid'] != str(uuid.uuid3(uuid.NAMESPACE_DNS, self.pify_ap_ssid)):
                     return True
         return False
 
@@ -31,7 +33,7 @@ class NM:
     def is_in_AP_mode(self):
         for conn in nm.NetworkManager.ActiveConnections:
             settings = conn.Connection.GetSettings()['connection']
-            if settings['uuid'] == str(uuid.uuid3(uuid.NAMESPACE_DNS, self.OPQ_AP_NAME)):
+            if settings['uuid'] == str(uuid.uuid3(uuid.NAMESPACE_DNS, self.pify_ap_ssid)):
                 return True
         return False
 
@@ -82,23 +84,23 @@ class NM:
         new_connection = {
             '802-11-wireless': {'mode': 'ap',
                                 'hidden': False,
-                                'ssid': self.OPQ_AP_NAME},
+                                'ssid': self.pify_ap_ssid},
 
-            'connection': {'id': self.OPQ_AP_NAME,
+            'connection': {'id': self.pify_ap_ssid,
                            'type': '802-11-wireless',
-                           'uuid': str(uuid.uuid3(uuid.NAMESPACE_DNS, self.OPQ_AP_NAME)),
+                           'uuid': str(uuid.uuid3(uuid.NAMESPACE_DNS, self.pify_ap_ssid)),
                            'autoconnect': False},
             'ipv4': {'method': 'shared'},
             'ipv6': {'method': 'auto'}
         }
         nm.Settings.AddConnection(new_connection)
-        self.activate_connection(self.OPQ_AP_NAME)
+        self.activate_connection(self.pify_ap_ssid)
 
     def disable_AP_mode(self):
         connections = nm.Settings.ListConnections()
         connections = dict([(x.GetSettings()['connection']['id'], x) for x in connections])
-        if self.OPQ_AP_NAME in  connections:
-            connections[self.OPQ_AP_NAME].Delete()
+        if self.pify_ap_ssid in  connections:
+            connections[self.pify_ap_ssid].Delete()
 
 
     def activate_connection(self, SSID):

@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="css/pifi.css">
+    <title>{{pify_server_title}}</title>
 </head>
 <body>
 <nav class="navbar navbar-inverse bg-inverse sticky-top">
-    <a class="navbar-brand" href="#">PiFi Wireless Agent - OPQ</a>
+    <a class="navbar-brand" href="#">{{pify_server_title}}</a>
 </nav>
 <div class="container" id="content">
     <div class="row">
@@ -65,7 +66,7 @@
                 </div>
                 <div class="card-footer">
                     <a href="/refresh" class="btn btn-danger btn-block">Refresh Wireless Network List</a>
-                    <a href="/forget" class="btn btn-danger btn-block">Forget Saved Networks</a>
+                    <a href="/forget" class="btn btn-danger btn-block">Forget Saved Networks`</a>
                 </div>
             </div>
         </div>
