@@ -120,7 +120,6 @@ class NM:
         nm.NetworkManager.Enable(False)
         nm.NetworkManager.Enable(True)
 
-    #@property
     def get_ssids(self):
         if self.is_in_AP_mode():
             pass

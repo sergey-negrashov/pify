@@ -17,22 +17,17 @@ def load_tpl(path: str) -> str:
 
 @bottle.route("/")
 def index():
-    #nm = nmoperations.NM()
-    #print(_nm)
-    #print(_nm.get_ssids())
     return bottle.template(load_tpl("web/views/pify.tpl"), networks=_nm.get_ssids())
 
 
 @bottle.route("/refresh")
 def refresh():
-    #pify.wait_then_run(5, pify.refresh, [nmoperations.NM()])
     timer = threading.Timer(5, pify.refresh, (_nm,))
     timer.start()
     return bottle.template(load_tpl("web/views/refresh.tpl"))
 
 @bottle.route("/forget")
 def forget_devices():
-    #nm = nmoperations.NM()
     timer = threading.Timer(5, pify.forget_networks, (_nm,))
     timer.start()
     return bottle.template(load_tpl("web/views/refresh.tpl"))
@@ -40,7 +35,6 @@ def forget_devices():
 
 @bottle.post("/connect/open")
 def connect_open():
-    #nm = nmoperations.NM()
     form = bottle.request.forms
     if "security_type" in form and "ssid" in form:
         ssid = form["ssid"]

@@ -21,6 +21,7 @@ def disable_ap(nm: nmoperations.NM):
         logging.info("Disabling AP mode")
         nm.disable_AP_mode()
         time.sleep(1)
+
     logging.info("AP mode disabled")
 
 
@@ -114,7 +115,6 @@ def forget_networks(nm: nmoperations.NM):
 class PifyFsmThread(threading.Thread):
     def __init__(self, nm):
         super().__init__()
-        #self.nm = nmoperations.NM()
         self.nm = nm
 
     def run(self):
@@ -127,8 +127,6 @@ class PifyFsmThread(threading.Thread):
 if __name__ == "__main__":
     logging.info("Starting pify")
     nm = nmoperations.NM()
-    print("pify", nm)
-    print("pify", nm.get_ssids())
     logging.info("Starting pify FSM")
     fsm_thread = PifyFsmThread(nm)
     fsm_thread.start()
