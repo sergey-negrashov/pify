@@ -139,6 +139,8 @@ if __name__ == "__main__":
         logging.info("Loading default configuration")
         config = conf.PifyConfiguration()
 
+    logging.debug("Configuration is:\n{}".format(str(config)))
+
     # Grab an instance of the network manager, it is thread safe
     nm = nmoperations.NM(config)
 
