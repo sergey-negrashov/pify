@@ -39,7 +39,7 @@
         if(countdown > 0) {
             window.setTimeout(cd, one_sec);
         } else {
-            //window.location.href = "http://10.0.0.1"
+            window.location.href = "http://emilia.ics.hawaii.edu/research"
         }
     }
     cd();
