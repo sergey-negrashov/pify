@@ -112,22 +112,28 @@ def forget_networks(nm: nmoperations.NM):
     enable_ap(nm)
 
 class PifyFsmThread(threading.Thread):
-    def __init__(self):
+    def __init__(self, nm):
         super().__init__()
-        self.nm = nmoperations.NM()
+        #self.nm = nmoperations.NM()
+        self.nm = nm
 
     def run(self):
         start_fsm(self.nm)
 
+    def nm(self):
+        return self.nm
+
 
 if __name__ == "__main__":
     logging.info("Starting pify")
-
+    nm = nmoperations.NM()
+    print("pify", nm)
+    print("pify", nm.get_ssids())
     logging.info("Starting pify FSM")
-    fsm_thread = PifyFsmThread()
+    fsm_thread = PifyFsmThread(nm)
     fsm_thread.start()
 
     logging.info("Starting bottle server")
-    web.server.run()
+    web.server.run(nm)
 
 
