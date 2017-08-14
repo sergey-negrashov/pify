@@ -1,6 +1,10 @@
 import conf
+import scan_networks as ssids
+
 import NetworkManager as nm
 import dbus.mainloop.glib
+
+
 import uuid
 
 
@@ -123,20 +127,21 @@ class NM:
         nm.NetworkManager.Enable(True)
 
     def get_ssids(self):
-        if self.is_in_AP_mode():
-            pass
-        else:
-            self.cached_ssids.clear()
-            ssids = set()
-            for dev in nm.NetworkManager.GetDevices():
-                if dev.DeviceType != nm.NM_DEVICE_TYPE_WIFI:
-                    continue
-                for ap in dev.GetAccessPoints():
-                    if ap.Ssid not in ssids:
-                        ssids.add(ap.Ssid)
-                        self.cached_ssids.append([ap.Ssid, ap.Flags | ap.WpaFlags, ap.Strength])
+        return ssids.scan_for_wifi_networks(b"wlan0")
+        #if self.is_in_AP_mode():
+        #    pass
+        #else:
+        #    self.cached_ssids.clear()
+        #    ssids = set()
+        #    for dev in nm.NetworkManager.GetDevices():
+        #        if dev.DeviceType != nm.NM_DEVICE_TYPE_WIFI:
+        #            continue
+        #        for ap in dev.GetAccessPoints():
+        #            if ap.Ssid not in ssids:
+        #                ssids.add(ap.Ssid)
+        #                self.cached_ssids.append([ap.Ssid, ap.Flags | ap.WpaFlags, ap.Strength])
 
-        return self.cached_ssids
+        #return self.cached_ssids
 
     def delete_all_connection(self):
         connections = nm.Settings.ListConnections()

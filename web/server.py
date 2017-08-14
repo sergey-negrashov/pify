@@ -62,7 +62,7 @@ def connect_wpa():
         if form["security_type"] == "wpa":
             timer = threading.Timer(5, pify.connect_wpa, (_nm, ssid, ssid_pass))
             timer.start()
-            return bottle.template(load_tpl("web/views/post_connect.tpl"), pify_server_title=_conf.pify_server_title(),
+            return bottle.template(load_tpl("web/views/post_connect.tpl"), pify_server_title=_conf.pify_server_title(), pify_post_connect_url=_conf.pify_post_connect_url(),
                                    ssid=ssid)
     else:
         return "Invalid connection type"

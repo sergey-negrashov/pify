@@ -180,6 +180,9 @@ def do_scan_results(sk, if_index, driver_id, results):
 
 
 def scan_for_wifi_networks(interface):
+    def db_to_percent(db):
+        return 2.0 * (db + 100)
+
     pack = struct.pack('16sI', interface, 0)
     sk = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -214,16 +217,24 @@ def scan_for_wifi_networks(interface):
 
     ap_list = []
     for _, f in results.items():
-        ssid = f['information_elements']['SSID']
+        ssid = str(f['information_elements']['SSID']).encode("ascii", "ignore")
+        if len(ssid) == 0:
+            continue
+        if u"\x00".encode("ascii", "ignore") in ssid:
+            continue
+        print (ssid, len(ssid))
         # pp.pprint(f['information_elements'])
         security = 0
         if 'RSN' in f['information_elements']:
             security = 1
-        signal_strength = f['signal']
-        ap_list.append([ssid,security,signal_strength])
+        signal_strength = db_to_percent(f['signal'])
+        if signal_strength <= 25:
+            continue
+        network_tuple = [ssid, security, signal_strength]
+        ap_list.append(network_tuple)
     return ap_list
 
 
 if __name__=='__main__':
     result = scan_for_wifi_networks("wlp2s0")
-    print result
+    print(result)

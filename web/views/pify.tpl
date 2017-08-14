@@ -25,7 +25,7 @@
                 <div class="card-block">
                     <ul class="list-group">
                     % for network in sorted(networks, key=lambda lst: lst[2], reverse=True):
-                        %include("web/views/network.tpl", ssid=network[0], security=network[1], strength=network[2])
+                        %include("web/views/network.tpl", ssid=network[0].decode("utf-8"), security=network[1], strength=network[2])
                     % end
 
                     <!-- Connect to hidden open network -->
@@ -65,7 +65,7 @@
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <a href="/refresh" class="btn btn-danger btn-block">Refresh Wireless Network List</a>
+	    	    <!--<a href="/refresh" class="btn btn-danger btn-block">Refresh Wireless Network List</a>-->
                     <a href="/forget" class="btn btn-danger btn-block">Forget Saved Networks</a>
                 </div>
             </div>

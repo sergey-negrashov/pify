@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 def fsm_start(nm: nmoperations.NM):
     disable_ap(nm)
-    nm.get_ssids()
+    #nm.get_ssids()
     fsm_is_conn_a(nm)
 
 
@@ -56,7 +56,7 @@ def fsm_monitor_connection(nm: nmoperations.NM):
 def fsm_monitor_ap(nm: nmoperations.NM):
     logging.info("monitor_ap")
     disable_ap(nm)
-    nm.get_ssids()
+    #nm.get_ssids()
     fsm_is_conn_a(nm)
 
 
