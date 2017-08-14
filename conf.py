@@ -10,7 +10,7 @@ class PifyConfiguration():
             with(open(path, "r")) as f:
                 self.conf = json.load(f)
 
-    def get(self, key: str, default: str = None) -> str:
+    def get(self, key: str, default):
         if key in self.conf:
             return self.conf[key]
         else:
