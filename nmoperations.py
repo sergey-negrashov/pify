@@ -4,7 +4,7 @@ import scan_networks as ssids
 import NetworkManager as nm
 import dbus.mainloop.glib
 
-
+import time
 import uuid
 
 
@@ -125,6 +125,12 @@ class NM:
     def activate_any_connection(self):
         nm.NetworkManager.Enable(False)
         nm.NetworkManager.Enable(True)
+
+        time.sleep(3)
+
+        while nm.is_wifi_connecting():
+            time.sleep(1)
+
 
     def get_ssids(self):
         return ssids.scan_for_wifi_networks(b"wlan0")
