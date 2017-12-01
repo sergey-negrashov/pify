@@ -128,7 +128,7 @@ class NM:
 
         time.sleep(3)
 
-        while nm.is_wifi_connecting():
+        while self.is_wifi_connecting():
             time.sleep(1)
 
 
