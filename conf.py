@@ -25,6 +25,9 @@ class PifyConfiguration():
     def pify_post_connect_url(self) -> str:
         return self.get("pify_post_connect_url", "#")
 
+    def pify_debug(self) -> bool:
+        return self.get("", False)
+
     def __str__(self):
         return "pify_server_title:{}\npify_api_ssid:{}\npify_post_connect_url:{}".format(self.pify_server_title(),
                                                                                          self.pify_ap_ssid(),

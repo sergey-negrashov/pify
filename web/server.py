@@ -91,8 +91,9 @@ def run(config: conf.PifyConfiguration, nm: nmoperations.NM):
     global _conf
     _nm = nm
     _conf = config
+    pify_debug = config.pify_debug()
 
-    bottle.run(host="0.0.0.0", port=80)
+    bottle.run(host="0.0.0.0", port=80, debug=pify_debug)
 
 
 if __name__ == "__main__":
