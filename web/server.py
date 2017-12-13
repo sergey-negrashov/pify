@@ -8,12 +8,12 @@ import pify
 
 _nm = None
 _conf = None
+_pify_home = None
 
 
 def load_tpl(path: str) -> str:
-    pify_home = _conf.pify_home()
     try:
-        with open(pify_home + "/" + path) as f:
+        with open(_pify_home + "/" + path) as f:
             return f.read()
     except FileNotFoundError:
         logging.error("load_tpl: template not found: {}".format(path))
@@ -22,7 +22,7 @@ def load_tpl(path: str) -> str:
 @bottle.route("/")
 def index():
     return bottle.template(load_tpl("web/views/pify.tpl"), pify_server_title=_conf.pify_server_title(),
-                           networks=_nm.get_ssids(), pify_home=_conf.pify_home())
+                           networks=_nm.get_ssids(), pify_home=_pify_home)
 
 
 @bottle.route("/refresh")
@@ -74,24 +74,26 @@ def connect_wpa():
 # Static file routes
 @bottle.route("/css/<file>")
 def css(file: str):
-    return bottle.static_file(file, _conf.pify_home() + "/web/css")
+    return bottle.static_file(file, _pify_home + "/web/css")
 
 
 @bottle.route("/js/<file>")
 def js(file: str):
-    return bottle.static_file(file, _conf.pify_home() + "/web/js")
+    return bottle.static_file(file, _pify_home + "/web/js")
 
 
 @bottle.route("/img/<file>")
 def img(file: str):
-    return bottle.static_file(file, _conf.pify_home() + "/web/img")
+    return bottle.static_file(file, _pify_home + "/web/img")
 
 
 def run(config: conf.PifyConfiguration, nm: nmoperations.NM):
     global _nm
     global _conf
+    global _pify_home
     _nm = nm
     _conf = config
+    _pify_home = _conf.pify_home()
     pify_debug = config.pify_debug()
 
     bottle.run(host="0.0.0.0", port=80, debug=pify_debug)
