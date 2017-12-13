@@ -25,7 +25,7 @@
                 <div class="card-block">
                     <ul class="list-group">
                     % for network in sorted(networks, key=lambda lst: lst[2], reverse=True):
-                        %include("web/views/network.tpl", ssid=network[0].decode("utf-8", "ignore"), security=network[1], strength=network[2])
+                        %include(pify_home + "/web/views/network.tpl", ssid=network[0].decode("utf-8", "ignore"), security=network[1], strength=network[2])
                     % end
 
                     <!-- Connect to hidden open network -->

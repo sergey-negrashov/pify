@@ -26,7 +26,10 @@ class PifyConfiguration():
         return self.get("pify_post_connect_url", "#")
 
     def pify_debug(self) -> bool:
-        return self.get("", False)
+        return self.get("pify_debug", False)
+
+    def pify_home(self) -> str:
+        return self.get("pify_home", "/usr/local/pify")
 
     def __str__(self):
         return "pify_server_title:{}\npify_api_ssid:{}\npify_post_connect_url:{}".format(self.pify_server_title(),
