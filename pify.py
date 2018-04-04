@@ -13,10 +13,10 @@ import web.server
 logging.basicConfig(level=logging.DEBUG)
 
 def open_port_80_wlan0():
-    subprocess.run(["iptables" "-A" "INPUT" "-p" "tcp" "-i" "wlan0" "--dport" "80" "-j" "REJECT"])
+    subprocess.run(["iptables", "-A", "INPUT", "-p", "tcp", "-i", "wlan0", "--dport", "80", "-j",  "REJECT"])
 
 def close_port_80_wlan0():
-    subprocess.run(["iptables" "-D" "INPUT" "-p" "tcp" "-i" "wlan0" "--dport" "80" "-j" "REJECT"])
+    subprocess.run(["iptables", "-D", "INPUT", "-p", "tcp", "-i", "wlan0", "--dport", "80", "-j",  "REJECT"])
 
 def fsm_start(nm: nmoperations.NM):
     disable_ap(nm)
