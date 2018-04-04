@@ -1,5 +1,6 @@
 import logging
 import sched
+import subprocess
 import sys
 import time
 import threading
@@ -11,6 +12,11 @@ import web.server
 
 logging.basicConfig(level=logging.DEBUG)
 
+def open_port_80_wlan0():
+    subprocess.run(["iptables" "-A" "INPUT" "-p" "tcp" "-i" "wlan0" "--dport" "80" "-j" "REJECT"])
+
+def close_port_80_wlan0():
+    subprocess.run(["iptables" "-D" "INPUT" "-p" "tcp" "-i" "wlan0" "--dport" "80" "-j" "REJECT"])
 
 def fsm_start(nm: nmoperations.NM):
     disable_ap(nm)
@@ -66,6 +72,7 @@ def enable_ap(nm: nmoperations.NM):
         nm.create_AP()
         time.sleep(1)
 
+    open_port_80_wlan0()
     wait_then_run(60 * 10, fsm_monitor_ap, [nm])
 
 
@@ -75,6 +82,7 @@ def disable_ap(nm: nmoperations.NM):
         nm.disable_AP_mode()
         time.sleep(1)
 
+    close_port_80_wlan0()
     logging.info("AP mode disabled")
 
 
